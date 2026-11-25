@@ -1,0 +1,138 @@
+/* One page, 1024 by 1024 pixels. Every block has a fixed height, so the page cannot grow:
+   tools/render.mjs fails the build if any text marked .fit does not fit its box. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { width: 1024px; height: 1024px; background: #f6f1e4; }
+
+body {
+  font-family: 'Liberation Sans', 'Nimbus Sans', Arial, sans-serif;
+  color: #16181d;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+#page { width: 1024px; height: 1024px; overflow: hidden; padding: 0 16px; }
+
+/* Masthead */
+.strip {
+  display: flex; justify-content: space-between; align-items: center;
+  height: 23px; margin: 0 -16px; padding: 0 16px;
+  background: #111a33; color: #f3e9cf;
+  font: 700 10.5px/1 'DejaVu Sans Condensed', sans-serif; letter-spacing: 1.4px; text-transform: uppercase;
+}
+.strip span:last-child { color: #f2c14e; }
+
+h1 {
+  height: 68px; margin-top: 1px;
+  font: 700 65.5px/68px 'C059', 'Nimbus Roman', serif; letter-spacing: -1px;
+  text-align: center; white-space: nowrap;
+}
+
+.deck {
+  height: 20px; text-align: center; white-space: nowrap;
+  font: italic 700 15px/20px 'C059', serif; color: #8f1d1d;
+}
+.deck i { font-style: normal; font-size: 8px; margin: 0 10px; vertical-align: 2px; color: #b3261e; }
+
+/* Regions and fields */
+.regions { display: flex; gap: 2px; height: 18px; margin-top: 5px; }
+.regions span {
+  padding: 0 7px; color: #fff; text-align: center; white-space: nowrap; overflow: hidden;
+  font: 700 9.6px/18px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 0.8px; text-transform: uppercase;
+}
+
+.fields {
+  display: flex; justify-content: space-between;
+  height: 15px; margin-top: 2px; border-bottom: 1px solid #c9c0a8;
+  font: 10.2px/14px 'DejaVu Sans Condensed', sans-serif; color: #3d4250; white-space: nowrap;
+}
+.fields em { font-style: normal; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #111a33; }
+.fields b { color: #111a33; }
+
+/* Big numbers */
+.figures { display: grid; grid-template-columns: repeat(6, 1fr); height: 44px; margin-top: 4px; }
+.figures div { display: flex; align-items: center; gap: 7px; padding: 0 8px; border-left: 1px solid #c9c0a8; overflow: hidden; }
+.figures div:first-child { border-left: 0; padding-left: 0; }
+.figures strong { font: 700 27px/1 'C059', serif; color: #b3261e; letter-spacing: -0.5px; white-space: nowrap; }
+.figures span { max-height: 35px; overflow: hidden; font: 10.3px/11.6px 'Liberation Sans', sans-serif; color: #2b2f3a; }
+
+/* The day in UTC */
+.timeline {
+  display: flex; justify-content: space-between; align-items: center;
+  height: 19px; margin-top: 4px; padding: 0 8px;
+  background: #111a33; color: #f4ecd8; white-space: nowrap;
+  font: 10.4px/19px 'DejaVu Sans Condensed', sans-serif;
+}
+.timeline em { font-style: normal; font-weight: 700; color: #f2c14e; letter-spacing: 1.2px; text-transform: uppercase; }
+.timeline b { color: #f2c14e; margin-right: 3px; }
+
+/* Stories */
+.art { display: block; }
+
+.meta { display: flex; align-items: center; gap: 5px; height: 16px; margin-top: 4px; white-space: nowrap; overflow: hidden; }
+.num {
+  flex: none; min-width: 15px; height: 15px; padding: 0 3px; border-radius: 8px;
+  color: #fff; text-align: center; font: 700 9.5px/15px 'DejaVu Sans Condensed', sans-serif;
+}
+.place { font: 700 9.6px/16px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 0.7px; text-transform: uppercase; }
+.field { font: 9.6px/16px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 0.7px; text-transform: uppercase; color: #5b6170; }
+.field::before { content: '· '; }
+
+.tag {
+  flex: none; margin-left: auto; padding: 0 3.5px;
+  border: 1px solid; border-radius: 2px; background: #fffdf6;
+  font: 700 7.6px/11px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 0.7px;
+}
+.tag-official { color: #1d4ed8; }
+.tag-reported { color: #15803d; }
+.tag-claim { color: #b3261e; }
+
+.leads { display: grid; grid-template-columns: repeat(3, 322px); gap: 13px; margin-top: 7px; }
+.lead h2 { height: 50px; margin-top: 2px; overflow: hidden; font: 700 22.5px/25px 'C059', serif; letter-spacing: -0.3px; }
+.lead p { height: 46px; margin-top: 3px; overflow: hidden; font: 12.4px/15.2px 'Liberation Sans', sans-serif; color: #2b2f3a; }
+
+.cards { display: grid; grid-template-columns: repeat(5, 190px); column-gap: 10.5px; row-gap: 7px; margin-top: 8px; }
+.card .meta { height: 14px; margin-top: 3px; gap: 4px; }
+.card .place, .card .field { font-size: 8.6px; line-height: 14px; letter-spacing: 0.4px; }
+.card h3 { height: 35px; margin-top: 1px; overflow: hidden; font: 700 15.4px/17.4px 'C059', serif; letter-spacing: -0.2px; }
+.card p { height: 26px; margin-top: 2px; overflow: hidden; font: 11px/13px 'Liberation Sans', sans-serif; color: #2b2f3a; }
+
+/* Map and briefs */
+.bottom { display: grid; grid-template-columns: 318px 1fr; gap: 16px; margin-top: 8px; }
+.where, .also, .cols ol { min-width: 0; }
+.label {
+  height: 19px; padding-top: 2px; border-top: 2px solid #111a33; white-space: nowrap; overflow: hidden;
+  font: 700 10.4px/15px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 1.3px; text-transform: uppercase; color: #111a33;
+}
+.label small { margin-left: 6px; font: 9.4px/15px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 0.2px; text-transform: none; color: #5b6170; }
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+ol { list-style: none; }
+li {
+  display: flex; align-items: center; gap: 4px;
+  height: 12.8px; white-space: nowrap; overflow: hidden;
+  font: 11px/12.8px 'Liberation Sans', sans-serif;
+}
+li b { font: 700 9.2px/12.8px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 0.5px; text-transform: uppercase; }
+li .num { min-width: 14px; height: 12px; font-size: 8.4px; line-height: 12px; }
+
+/* Date check and footer */
+.check {
+  height: 44px; margin-top: 6px; padding: 3px 7px; overflow: hidden;
+  border: 1.4px solid #b3261e; background: #fbeee6;
+  font: 10px/12.2px 'Liberation Sans', sans-serif; color: #2b2f3a;
+}
+.check b {
+  margin-right: 4px; padding: 1px 5px; background: #b3261e; color: #fff;
+  font: 700 10px/12px 'DejaVu Sans Condensed', sans-serif; letter-spacing: 1.2px; text-transform: uppercase;
+}
+
+footer {
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  height: 15px; margin-top: 3px; white-space: nowrap;
+  font: 8.8px/15px 'Liberation Sans', sans-serif; color: #5b6170;
+}
+.legend { display: flex; gap: 9px; }
+.legend .tag { margin-left: 0; }
+.sources { flex: 1; min-width: 0; overflow: hidden; text-align: right; }
